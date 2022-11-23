@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #result{
+            width: 300px;
+            height: 300px;
+            background-color: pink;
+        }
+    </style>
+</head>
+<body>
+    <button>发送请求</button>
+    <button>取消请求</button>
+    <div id="result"></div>
+
+    <script>
+        const btns = document.getElementsByTagName('button');
+        const result = document.getElementById('result');
+
+        let xhr = null;
+
+        //标识变量(是否正在发送Ajax请求)
+        let isSending = false;
+
+        btns[0].addEventListener('click',function() {
+            //如果正在发送，则取消该请求，创建一个新的请求
+            if(isSending) x.abort();
+            xhr = new XMLHttpRequest();
+            isSending = true;
+            xhr.open('GET', 'http://127.0.0.1:8000/delay');
+            xhr.send();
+            xhr.onreadystatechange = function() {
+                if(xhr.readyState === 4) {
+                    isSending = false;
+                }
+            }
+        
+        })
+        btns[1].addEventListener('click', function(){
+            xhr.abort();
+
+        })
+    </script>
+</body>
+</html>

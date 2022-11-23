@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #result{
+            width: 300px;
+            height: 300px;
+            background-color: pink;
+        }
+    </style>
+</head>
+<body>
+    <div id="result"></div>
+
+    <script>
+        const result = document.getElementById('result');
+        result.addEventListener('mousemove',function() {
+            // 1、创建对象
+            const xhr = new XMLHttpRequest();
+            // 2、初始化，设置请求方法和url
+            xhr.open('POST', 'http://127.0.0.1:8000/server');
+            // 设置请求头
+            //Content-Type设置请求体内容的类型
+            //application/x-www-form-urlencoded参数查询字符串类型
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            //自定义
+            xhr.setRequestHeader('name','xiaohei')
+            // 3、发送(传递参数)
+            // xhr.send('a=1&b=2&c=3');
+            xhr.send('a:1&b:2&c:3');
+            // 4、事件绑定 处理服务端返回的结果
+            // readystate表示xhr对象中的属性，表示状态0（未初始化）1（open调用完毕）2（send调用完毕）3（服务端返回部分结果）4（服务端返回所有结果）
+            xhr.onreadystatechange = function() {
+                // 判断服务端返回了所有结果
+                if(xhr.readyState === 4) {
+                    // 判断响应状态码 200 404 403 401 500
+                    // 2xx成功
+                    if(xhr.status >= 200 && xhr.status < 300){
+                        // 处理结果
+                        // 1、响应
+                        result.innerHTML = xhr.response
+
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+</html>
